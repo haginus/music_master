@@ -31,5 +31,7 @@ Instalați dependecies și rulați `main.py`. Pentru adăugarea de cântece navi
 - `[ parte_cântec ]`: Înveliți părțile cântecului în paranteze pătrate. O parte poate fi de exemplu 2-3 versuri ale cântecului. În baza inputului introdus de utilizator, algoritul va da continuarea până la sfârșitul părții și, dacă este prea mică, va include următoarea parte.
 - `( nexindexat )`: Înveliți bucăți pe care nu le doriți indexate între paranteze rotunde. Pot fi de exemplu interjecții, repetări în ecou pe background sau alte metode artistice. Acestea vor fi afișate la returnarea continuării. Un posibil uz este când solistul prelungește unele vocale și vrem să arătăm asta în versuri. De exemplu, pe versurile `nu pot să cred că m-ai uit(aaa)at / nu înțeleg, oare de ce ai plec(aaa)at?!` se vor indexa `uitat`, `plecat` și restul cuvintelor, însă afișarea va fi: `nu pot să cred că m-ai uitaaaat / nu înțeleg, oare de ce ai plecaaaat?!`
 
+Am introdus fișierele `songs.pkl` și `lyrics.pkl` în care sunt două cântece, ca să înțelegeți mai bine sintaxa.
+
 ## Feedback
 În cazul în care nu puteți rula programul, mă puteți contacta ca la o oră stabilită să îl rulez eu la mine pe calculator și fac un tunnel, să vă dau link-ul și să-l încercați.
