@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Trap Flexer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
+    <script src="{{ url_for('static', filename='scripts.js') }}" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="box song-box">
+        <h1 class="title">Listă piese <a href="add"><button class="icon">add</button></a></h1>
+        <div class="page-content">
+            <table>
+                <tr>
+                    <th>Nume</th>
+                    <th>Artist</th>
+                    <th>Acțiuni</th>
+                </tr>
+                {%for key in songs%}
+                <tr>
+                    <td>{{songs[key].title}}</td>
+                    <td>{%for i in range(songs[key].artists|length)%} {{songs[key].artists[i]}}{%if i < songs[key].artists|length - 1%}, {%endif%} {%endfor%}</td>
+                    <td style="width: 90px">
+                        <a href="edit/{{key}}"><button class="icon">edit</button></a>
+                        <button data-key="{{key}}" data-title="{{songs[key].title}}" class="icon deleteSongButton">delete</button>
+                    </td>
+                </tr>
+                {%endfor%}
+            </table>
+            <div class="centered">
+                <a href="add"><button>Adaugă piesă</button></a>
+            </div>
+        </div>
+    </div>
+  </body>
+
+<script>
+    function delete_song(song_id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                location.reload();
+            }
+        };
+        xhttp.open("POST", "/songs/delete", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify({id: song_id}));
+    }
+
+    window.onload = function() {
+        var submitButton = document.getElementsByClassName('deleteSongButton');
+        for(i = 0; i < submitButton.length; i++)
+        submitButton[i].addEventListener("click", function(event) {
+            event.preventDefault();
+            var title = event.target.getAttribute('data-title')
+            var key = event.target.getAttribute('data-key')
+            if(confirm('Ștergeți melodia "' + title + '"?')) {
+                delete_song(key);
+            }
+        });
+    }
+</script>
+</html>

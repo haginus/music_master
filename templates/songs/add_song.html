@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Trap Flexer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
+    <script src="{{ url_for('static', filename='scripts.js') }}" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="box song-box">
+        <h1 class="title">Adaugă o melodie</h1>
+        <form class="page-content">
+            <div>
+                <div class="input-field">
+                    <div class="field-name">Titlu melodie</div>
+                    <input type="text" id="songTitle"/>
+                </div>
+            </div>
+            <div>
+                <div class="input-field">
+                    <div class="field-name">Artiști melodie</div>
+                    <input type="text" id="songArtists"/>
+                    <div class="input-help">Separați prin virgule</div>
+                </div>
+            </div>
+            <div>
+                <div class="input-field">
+                    <div class="field-name">Versuri</div>
+                    <textarea rows="20" cols="80" id="songLyrics"></textarea>
+                </div>
+            </div>
+            <div class="input-field">
+                <input type="submit" id="submit" value="Trimite"/>
+            </div>
+        </form>
+        <div id="result"></div>
+    </div>
+  </body>
+
+<script>
+    function add_song(req) {
+        var resultT = document.getElementById('result');
+        resultT.textContent = 'Se incarca...';
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                resultT.textContent = 'Gata!';
+            }
+            console.log(this)
+        };
+        xhttp.open("POST", "/songs/add", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(req));
+    }
+
+    window.onload = function() {
+        var submitButton = document.getElementById('submit');
+        submitButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            var title = document.getElementById('songTitle').value
+            var artists = document.getElementById('songArtists').value.split(', ')
+            var lyrics = document.getElementById('songLyrics').value
+            add_song({'title': title, 'artists': artists, 'lyrics': lyrics});
+        });
+    }
+</script>
+</html>

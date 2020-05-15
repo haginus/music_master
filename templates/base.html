@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Music Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css"/>
+    <script src="{{ url_for('static', filename='scripts.js') }}" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="chat-box box">
+      <div class="chat-box-inner">
+        <div class="chat-box-header">
+          <div class="chat-person" id="infoButton">
+            <img class="profile-picture" src="{{ url_for('static', filename='pp.jpg') }}"/>
+            <span class="person-name">Music Master</span>
+            <div class="overflow"></div>
+          </div>
+          <div class="badge">ALPHA</div>
+        </div>
+        <div class="chat-box-content" id="chatContentContainer">
+          <div class="chat-content" id="chatContent">
+            <div class="chat-text-bubble-container">
+              <div class="chat-text-bubble">
+                <div class="chat-text" id="temp">În stație la Lizeanu 🚋<br>Am văzut trecând o blondă ca după ultima modă 🥵</div>
+              </div>
+              <div class="song-info">Damian & The Brothers x Smiley - În stație la Lizeanu</div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-box-send-bar">
+          <input type="text" id="input"/>
+          <button class="send-button" id="sendButton">Send</button>
+        </div>
+      </div>
+      <div class="chat-box-inner over" id="infoScreen">
+        <div class="chat-box-header">
+          <button id="infoCloseButton" class="icon">close</button>
+        </div>
+        <div class="chat-box-content">
+          <div class="chat-person big">
+            <img class="profile-picture" src="{{ url_for('static', filename='pp.jpg') }}"/>
+            <span class="person-name">Music Master</span>
+            <div class="overflow"></div>
+          </div>
+          <p class="app-info">v0.8 ALPHA<br>Developed by Haginus</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
