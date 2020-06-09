@@ -258,11 +258,14 @@ def sanitize_text(s):
 
 
 def driver():
-    f = open('songs.pkl', 'rb')
-    global songs
-    songs = pickle.load(f, encoding='bytes')
-    f.close()
-    g = open('lyrics.pkl', 'rb')
-    global lyrics_dict
-    lyrics_dict = pickle.load(g, encoding='bytes')
-    g.close()
+    try:
+        f = open('songs.pkl', 'rb')
+        global songs
+        songs = pickle.load(f, encoding='bytes')
+        f.close()
+        g = open('lyrics.pkl', 'rb')
+        global lyrics_dict
+        lyrics_dict = pickle.load(g, encoding='bytes')
+        g.close()
+    except FileNotFoundError:
+        reset_db()
