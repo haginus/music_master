@@ -48,7 +48,7 @@
             }
             console.log(this)
         };
-        xhttp.open("POST", "/songs/add", true);
+        xhttp.open("POST", "/admin/songs/add", true);
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.send(JSON.stringify(req));
     }

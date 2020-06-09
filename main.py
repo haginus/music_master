@@ -1,8 +1,10 @@
-from flask import Flask, jsonify, abort, render_template, url_for, request
+from flask import Flask, jsonify, abort, render_template, session, url_for, request, redirect
 from Songs import *
 
 driver()
 app = Flask(__name__)
+
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 @app.route('/')
@@ -10,26 +12,50 @@ def main():
     return render_template("base.html")
 
 
-@app.route('/songs/')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        if request.form['username'] == 'admin' and request.form['password'] == 'admin':
+            session['username'] = request.form['username']
+            return redirect(url_for('list_songs_render'))
+        else:
+            return redirect(url_for('login'))
+    return render_template("login.html")
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('main'))
+
+
+@app.route('/admin/songs/')
 def list_songs_render():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     songs_dict = get_songs()
     return render_template("songs/list.html", songs=songs_dict)
 
 
-@app.route('/songs/add')
+@app.route('/admin/songs/add')
 def add_song_render():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     return render_template("songs/add_song.html")
 
 
-@app.route('/songs/add', methods=['POST'])
+@app.route('/admin/songs/add', methods=['POST'])
 def add_song_request():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     res = add_song(json.dumps(request.get_json()))
     return jsonify(res)
 
 
-@app.route('/songs/edit/<song_id>')
+@app.route('/admin/songs/edit/<song_id>')
 def edit_songs_render(song_id):
-    print(song_id)
+    if 'username' not in session:
+        return redirect(url_for('login'))
     song = get_song(song_id)
     if song == -1:
         abort(404)
@@ -41,24 +67,22 @@ def edit_songs_render(song_id):
     return render_template("songs/edit_song.html", song=song, artists=artists)
 
 
-@app.route('/songs/edit', methods=['POST'])
+@app.route('/admin/songs/edit', methods=['POST'])
 def edit_song_request():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     data = request.get_json()
     res = edit_song(data['id'], data['title'], data['artists'], data['lyrics'])
     return jsonify(res)
 
 
-@app.route('/songs/delete', methods=['POST'])
+@app.route('/admin/songs/delete', methods=['POST'])
 def delete_song_request():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     data = request.get_json()
     res = delete_song(data['id'])
     return jsonify(res)
-
-
-'''
-This method expects a json content.
-Use header: 'Content-Type: application/json'
-'''
 
 
 @app.route('/lyrics', methods=['POST'])

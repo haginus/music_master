@@ -42,7 +42,7 @@
                 location.reload();
             }
         };
-        xhttp.open("POST", "/songs/delete", true);
+        xhttp.open("POST", "/admin/songs/delete", true);
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.send(JSON.stringify({id: song_id}));
     }

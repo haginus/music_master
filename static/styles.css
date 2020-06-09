@@ -340,3 +340,9 @@ td {
     text-align: center;
 }
 
+/* Login */
+.login-box {
+    height: 300px;
+    padding: 24px 32px;
+}
+
