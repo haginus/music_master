@@ -6,8 +6,8 @@ A Python/Flask app that's given a song lyric/part and returns the next lyrics in
 - [x] Chatbox
 - [x] Trimiterea de cereri AJAX către back-end pentru răspuns la query
 - [x] Posibilitatea adăugării, editării și ștergerii pieselor (în zona de admin)
-- [ ] Înfrumuțesarea zonelor de adăgare/editare piese în zona de admin
-- [ ] Verificare sintaxă versuri la adăugarea pieselor (trebuie portat codul, la editare există deja)
+- [x] Înfrumuțesarea zonelor de adăgare/editare piese în zona de admin
+- [x] Verificare sintaxă versuri la adăugarea pieselor
 ### Back-end
 - [x] Adăugare de piese
 - [x] Adăugarea pieselor în index
@@ -23,7 +23,7 @@ A Python/Flask app that's given a song lyric/part and returns the next lyrics in
 - [x] Flask/Sistem de logare pentru admini (în prezent oricine poate accesa zona de admin)
 #### Bugs
 - [ ] Există posibilitatea ca ștergerea pieselor să se fi stricat din cauza modificării metodei de indexare.
-- [ ] Dacă nu există fișierele `songs.pkl` și `lyrics.pkl` care stochează cântecele și indexul, programul dă eroare. Ar trebui să le inițializeze cu două dicționare goale.
+- [x] Dacă nu există fișierele `songs.pkl` și `lyrics.pkl` care stochează cântecele și indexul, programul dă eroare. Ar trebui să le inițializeze cu două dicționare goale.
 
 # Cum funcționează
 Instalați dependecies și rulați `main.py`. Pentru adăugarea de cântece navigați la `localhost:port/songs`.

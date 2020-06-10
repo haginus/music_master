@@ -71,6 +71,7 @@ def add_song(data):
     pickle.dump(songs, f)
     f.close()
     index_lyrics(song)
+    return {'success': True, 'song_id': song.id}
 
 
 class Song:
@@ -221,6 +222,7 @@ def edit_song(song_id, title, artists, lyrics):
     f = open("songs.pkl", "wb")
     pickle.dump(songs, f)
     f.close()
+    return {'success': True, 'song_id': song.id}
 
 
 def delete_song(song_id):
