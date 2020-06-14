@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, abort, render_template, session, url_for, request, redirect
-from Songs import *
+from IndexService import *
 
-driver()
 app = Flask(__name__)
+
+index_service = IndexService.get_instance()
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
@@ -39,7 +40,7 @@ def logout():
 def list_songs_render():
     if 'username' not in session: # protect against not logged in users
         return redirect(url_for('login'))
-    songs_dict = get_songs()
+    songs_dict = index_service.get_songs()
     return render_template("songs/list.html", songs=songs_dict)
 
 
@@ -54,7 +55,11 @@ def add_song_render():
 def add_song_request():
     if 'username' not in session:
         return redirect(url_for('login'))
-    res = add_song(json.dumps(request.get_json()))
+    req = request.get_json()
+    title = req['title']
+    artists = req['artists']
+    lyrics = req['lyrics']
+    res = index_service.add_song(title, artists, lyrics)
     return jsonify(res)
 
 
@@ -62,8 +67,8 @@ def add_song_request():
 def edit_songs_render(song_id):
     if 'username' not in session:
         return redirect(url_for('login'))
-    song = get_song(song_id)  # try get the song
-    if song == -1:  # if there is not a song with this ID throw 404 error
+    song = index_service.get_song(song_id)  # try get the song
+    if song is None:  # if there is not a song with this ID throw 404 error
         abort(404)
     artists = ''
     for index in range(len(song.artists)):  # artists separated by comma for input
@@ -78,7 +83,7 @@ def edit_song_request():  # edit song POST method
     if 'username' not in session:
         return redirect(url_for('login'))
     data = request.get_json()
-    res = edit_song(data['id'], data['title'], data['artists'], data['lyrics'])  # get song info and run edit_song
+    res = index_service.edit_song(data['id'], data['title'], data['artists'], data['lyrics'])  # get song info and run edit_song
     return jsonify(res)
 
 
@@ -87,13 +92,13 @@ def delete_song_request():
     if 'username' not in session:
         return redirect(url_for('login'))
     data = request.get_json()
-    res = delete_song(data['id'])
+    res = index_service.delete_song(data['id'])
     return jsonify(res)
 
 
 @app.route('/lyrics', methods=['POST'])
-def lyrics():  # get query and take to complete_lyrics function
-    res = complete_lyrics(request.get_json()['query'])
+def get_lyrics():  # get query and take to complete_lyrics function
+    res = index_service.complete_lyrics(request.get_json()['query'])
     return jsonify(res)
 
 
