@@ -5,7 +5,7 @@ import uuid
 class Song:
     def __init__(self, title, artists, lyrics):
         self.title = title
-        self.lyrics = lyrics
+        self.lyrics = lyrics.replace('\u2026', '...')  # replace unicode char '...' with 3 dots
         self.artists = artists
         self.id = uuid.uuid4()  # generates unique ID for the new song
 
