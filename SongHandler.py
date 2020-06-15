@@ -81,14 +81,17 @@ class SongHandler:
         except IOError:
             return None
 
-    def edit_song(self, song_id, title, artists, lyrics):
+    def edit_song(self, song_id, title=None, artists=None, lyrics=None):
         """
             Function to edit a song.
         """
-        song = self.get_song(song_id)  # get the song
-        song.title = title
-        song.artists = artists
-        song.lyrics = lyrics
+        song = self.get_song(song_id)  # get the
+        if title is not None:
+            song.title = title
+        if artists is not None:
+            song.artists = artists
+        if lyrics is not None:
+            song.lyrics = lyrics
         self.songs[song.id] = song  # save the song to dict
         try:
             self._save_files()

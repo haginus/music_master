@@ -22,7 +22,7 @@ A Python/Flask app that's given a song lyric/part and returns the next lyrics in
 - [x] Flask/Zona de admin
 - [x] Flask/Sistem de logare pentru admini (în prezent oricine poate accesa zona de admin)
 #### Bugs
-- [ ] Există posibilitatea ca ștergerea pieselor să se fi stricat din cauza modificării metodei de indexare.
+- [x] Există posibilitatea ca ștergerea pieselor să se fi stricat din cauza modificării metodei de indexare.
 - [x] Dacă nu există fișierele `songs.pkl` și `lyrics.pkl` care stochează cântecele și indexul, programul dă eroare. Ar trebui să le inițializeze cu două dicționare goale.
 
 # Cum funcționează

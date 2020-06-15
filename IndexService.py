@@ -35,7 +35,7 @@ class IndexService:
 
         return {'success': False}
 
-    def edit_song(self, song_id, title, artist, lyrics):
+    def edit_song(self, song_id, title=None, artist=None, lyrics=None):
         prev_song = self.song_handler.get_song(song_id)  # get song in current state
         if prev_song is None:  # if song does not exist
             return {'success': False}
@@ -82,7 +82,7 @@ class IndexService:
         self.song_handler.reset_db()
         self.index_handler.reset_db()
 
-    def complete_lyrics(self, part):
+    def complete_lyrics(self, part, with_emoji=True):
         """
         Function to be called by main.py in order to get the continuation
         """
@@ -91,7 +91,9 @@ class IndexService:
         if res['found']:
             choice = random.choice(res["songs"])  # choose a random song / choice is (songId, nextWordPos)
             song = self.song_handler.get_song(str(choice[0]))  # get that random song
-            lines = add_emoji(get_next_lines(song.lyrics, choice[1]))  # get the lines and add emoji to them
+            lines = get_next_lines(song.lyrics, choice[1])  # get the lines and add emoji to them
+            if with_emoji:
+                lines = add_emoji(lines)
             final = ''  # compose response string
             for index in range(len(lines)):
                 final += lines[index].replace('(', '').replace(')', '')  # remove ( and ) and append to string
@@ -105,11 +107,6 @@ class IndexService:
             path = os.getcwd() + "/static/images/not-found"
             image_path = url_for('static', filename="images/not-found/" + random.choice(os.listdir(path)))
             return {'found': False, 'response': {'image': image_path}}
-
-
-def check_hyphen(to_index):
-
-    return to_index
 
 
 def get_next_lines(lyrics, next_word):
@@ -135,7 +132,6 @@ def get_next_lines(lyrics, next_word):
                 part = lyrics[index2 + 1:index3]  # and append it as a whole to the first part
                 # part = part.translate(str.maketrans('', '', string.punctuation.replace('(', '').replace(')', '')))
                 lines += part.split('\n')  # split in lines
-    print(lines)
     return lines  # return the lines
 
 
