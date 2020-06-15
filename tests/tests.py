@@ -75,7 +75,10 @@ class TestIndexService(unittest.TestCase):
                                                                      "dorit!]")
 
         res = index_service.index_handler.find_lyrics("o secunda".split())  # we run this again
-        self.assertFalse(res['found'])  # expect to not find a match
+        self.assertFalse(res['found'])  # expect not to find a match
+
+        res = index_service.index_handler.find_lyrics("un minut".split())  # we run this again
+        self.assertTrue(res['found'])  # expect to find a match
 
     def test_delete_song(self):
         """

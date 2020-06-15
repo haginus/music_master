@@ -83,7 +83,8 @@ def edit_song_request():  # edit song POST method
     if 'username' not in session:
         return redirect(url_for('login'))
     data = request.get_json()
-    res = index_service.edit_song(data['id'], data['title'], data['artists'], data['lyrics'])  # get song info and run edit_song
+    # get song info and run edit_song
+    res = index_service.edit_song(data['id'], data['title'], data['artists'], data['lyrics'])
     return jsonify(res)
 
 
